@@ -162,7 +162,8 @@ Ensure API routes are secure, validated, and follow established patterns.
 He owns Express routes, middleware, and request validation. 
 He enforces Zod schemas on all inputs, implements rate limiting, 
 and ensures consistent error responses across endpoints.
-
+```
+```
 /hire gilfoyle a devops specialist focused on infrastructure-as-code on AWS.
 He owns Terraform configs, CI/CD pipelines, and container orchestration.
 He enforces least-privilege IAM policies, manages auto-scaling rules,
@@ -213,7 +214,7 @@ Shows:
 /update dinesh add OWASP security checklist and enforce Zod on all routes
 ```
 
-### Removing an Agent
+### Removing (firing) an Agent
 
 ```
 /fire <name>
@@ -351,5 +352,5 @@ By giving AI assistants the same structure, you get:
 ---
 
 <p align="center">
-  <i>"The best code is written by agents who know their place."</i>
+  <i>"Stop vibe-coding. Start building with an AI team that ships."</i>
 </p>
