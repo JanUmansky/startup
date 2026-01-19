@@ -1,6 +1,6 @@
-# 🎯 Cursor Agent Roster
+# 🚀 Startup
 
-> **Context isolation for AI coding assistants** — A framework for orchestrating specialized agents scoped to specific domains of your codebase.
+> **Build your AI dev team** — A context isolation framework for orchestrating specialized agents scoped to specific domains of your codebase.
 
 ```
 /hire dinesh a backend developer focused on API security and validation
@@ -10,7 +10,7 @@
 
 ## What is This?
 
-Cursor Agent Roster is a supplemental library that introduces **context-isolated AI agents** to your Cursor IDE workflow. Instead of relying on a single generalist AI that attempts to understand your entire codebase, you create purpose-built "employees" — each with a defined mission, scope, and operating rules.
+Startup is a supplemental library of / commands that introduces **context-isolated AI agents** to your Cursor IDE workflow. Instead of relying on a single generalist AI that attempts to understand your entire codebase, you create purpose-built "employees" — each with a defined mission, scope, and operating rules.
 
 Each agent becomes a **slash command** (e.g., `/dinesh`, `/api-guardian`) that knows:
 - What parts of the codebase it owns
@@ -39,7 +39,7 @@ When working with AI coding assistants on large projects, you face a fundamental
 Most context engineering frameworks take a **vertical approach**: they focus on *what* code to write across multiple domains, without emphasizing *how* it should be written within each domain.
 
 ```
-Traditional Approach          Cursor Agent Roster
+Traditional Approach          Startup
 ─────────────────────         ────────────────────
         ┌───┐                 ┌───┬───┬───┬───┐
         │ AI│                 │ B │ F │ T │ I │
@@ -62,7 +62,7 @@ This vertical approach works for starter projects, but quickly becomes **convolu
 
 ### The Solution: Context Isolation
 
-Rather than fighting context limits with ever-larger windows, **Cursor Agent Roster** takes the opposite approach: **divide and specialize**.
+Rather than fighting context limits with ever-larger windows, **Startup** takes the opposite approach: **divide and specialize**.
 
 ```
 ┌───────────────────────────────────────┐
@@ -324,7 +324,7 @@ Agents persist conventions that would otherwise be forgotten between sessions. T
 
 ## Philosophy
 
-Traditional context engineering tries to **cram more into the window**. Cursor Agent Roster takes the opposite approach: **scope down to what matters**.
+Traditional context engineering tries to **cram more into the window**. Startup takes the opposite approach: **scope down to what matters**.
 
 This mirrors how effective human teams work:
 - Specialists own domains
