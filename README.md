@@ -2,6 +2,8 @@
 
 > **Build your AI dev team** — A context isolation framework for orchestrating specialized agents scoped to specific domains of your codebase.
 
+**Intentionally minimal.** No bloat, no dependencies, no magic — just a handful of markdown files that give your AI assistants focus. Less noise, less context overflow, more signal.
+
 ```
 /hire dinesh a backend developer focused on API security and validation
 ```
