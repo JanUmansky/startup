@@ -13,7 +13,7 @@ User message: "/fire <name>" (e.g., "/fire bob" or "/fire api-guardian")
 
 ## Reserved Names (Protected)
 The following names are **system commands** and cannot be fired:
-- hire, fire, update, list, _roster
+- hire, fire, update, list, define, _roster
 
 If the user attempts to fire a reserved name, **reject the request** with a clear error:
 > ❌ Cannot fire `<name>` — this is a protected system command.
@@ -22,7 +22,7 @@ If the user attempts to fire a reserved name, **reject the request** with a clea
 ## Steps
 1) Extract assistant name.
 2) **Validate the name is not reserved:**
-   - Check against reserved names: hire, fire, update, list, _roster
+   - Check against reserved names: hire, fire, update, list, define, _roster
    - If reserved, reject immediately with the error message above
    - Do NOT proceed with deletion
 3) Resolve the command file:
@@ -31,7 +31,40 @@ If the user attempts to fire a reserved name, **reject the request** with a clea
 4) Delete the assistant command file.
 5) Update ROSTER_FILE:
    - Remove the assistant's entry under "Active Assistants".
-6) Report what was removed.
+6) Report what was removed with structured output.
+
+## Output Format
+
+Structure the response with emojis and tables:
+
+---
+
+### 🔥 Summary
+
+> One sentence: who was fired.
+
+Example: *Removed **dinesh** from your team.*
+
+---
+
+### 📁 Changes
+
+| Action | File | Location |
+|--------|------|----------|
+| 🗑️ Deleted | `dinesh.md` | `.cursor/commands/` |
+| 📝 Updated | `_roster.md` | `.cursor/commands/` |
+
+---
+
+### 👥 Remaining Team
+
+| Agent | Mission |
+|-------|---------|
+| 🔧 `/gilfoyle` | DevOps Specialist |
+
+*Use `/list` to see full team details.*
+
+---
 
 ## Safety
 - Only delete within COMMANDS_DIR unless explicitly asked.

@@ -90,14 +90,17 @@ Each agent operates with **focused context**:
 
 ```
 .cursor/
-└── commands/
-    ├── _roster.md      # Registry of active agents
-    ├── hire.md         # Meta-command: create new agents
-    ├── fire.md         # Meta-command: remove agents
-    ├── update.md       # Meta-command: modify agents
-    ├── list.md         # Meta-command: show all agents
-    ├── dinesh.md       # ← Hired agent created with /hire
-    └── gilfoyle.md     # ← Hired agent created with /hire
+├── commands/
+│   ├── _roster.md      # Registry of active agents
+│   ├── hire.md         # Meta-command: create new agents
+│   ├── fire.md         # Meta-command: remove agents
+│   ├── update.md       # Meta-command: modify agents
+│   ├── list.md         # Meta-command: show all agents
+│   ├── define.md       # Meta-command: create project rules
+│   ├── dinesh.md       # ← Hired agent created with /hire
+│   └── gilfoyle.md     # ← Hired agent created with /hire
+└── rules/
+    └── *.mdc           # Project-wide rules created with /define
 ```
 
 ### The Roster File (`_roster.md`)
@@ -201,7 +204,7 @@ The agent will:
 ```
 
 Shows:
-- System commands (hire, fire, update, list)
+- System commands (hire, fire, update, list, define)
 - Active agents with missions and focus areas
 
 ### Updating an Agent
@@ -224,9 +227,159 @@ Shows:
 
 ---
 
+## Rules
+
+While agents define **who does what**, rules define **how everyone does it**. Rules are project-wide conventions that apply to ALL agents — both hired specialists and system commands.
+
+### What Are Rules?
+
+Rules live in `.cursor/rules/` and establish universal standards for:
+
+| Category | Examples |
+|----------|----------|
+| **Naming** | camelCase variables, PascalCase components, kebab-case files |
+| **Style** | Arrow functions vs declarations, single vs double quotes |
+| **Structure** | Folder organization, file placement, barrel exports |
+| **Formatting** | Multiline thresholds, line length, template literals |
+| **Documentation** | When to comment, JSDoc requirements, README conventions |
+| **Patterns** | Error handling, imports ordering, testing structure |
+
+### Defining Rules
+
+```
+/define [optional instructions]
+```
+
+**Examples:**
+
+```
+/define
+```
+Analyzes your codebase automatically and infers best practices from existing patterns, config files (eslint, prettier, tsconfig), and ecosystem conventions.
+
+```
+/define prefer arrow functions, single quotes, and absolute imports
+```
+Combines your explicit preferences with automatic code analysis.
+
+```
+/define all public functions must have JSDoc comments
+```
+Creates a specific rule while still analyzing the codebase for context.
+
+### How Rules Work
+
+When you run `/define`:
+
+1. Creates `.cursor/rules/` folder if it doesn't exist
+2. Scans your codebase for existing patterns
+3. Checks config files (.eslintrc, .prettierrc, tsconfig.json, etc.)
+4. Combines detected conventions with your preferences
+5. Generates `.mdc` rule files with proper frontmatter that all agents will follow
+
+### Rule Files
+
+Rules are stored as `.mdc` files (markdown with YAML frontmatter) in `.cursor/rules/`:
+
+```
+.cursor/rules/
+├── conventions.mdc    # Global naming, style, formatting (alwaysApply: true)
+├── structure.mdc      # Global folder organization (alwaysApply: true)
+├── python.mdc         # Python-specific rules (globs: *.py)
+├── typescript.mdc     # TypeScript rules (globs: *.ts, *.tsx)
+└── api-routes.mdc     # API folder rules (globs: src/api/**)
+```
+
+### Rule File Format
+
+Every `.mdc` file **must** start with a YAML frontmatter block containing at least ONE of:
+
+| Field | When to Use | Example |
+|-------|-------------|---------|
+| `globs` | Rules for specific files/folders | `*.py`, `src/api/**`, `*.test.ts` |
+| `alwaysApply: true` | Global rules for entire codebase | N/A |
+
+### Example: Global Rule
+
+```markdown
+---
+alwaysApply: true
+---
+
+# Naming Conventions
+
+> These rules apply to ALL agents operating in this repository.
+
+## Variables & Functions
+
+### Rule: camelCase for variables and functions
+**Convention:** Use camelCase for all variable and function names
+**Rationale:** Consistent with JavaScript/TypeScript ecosystem standards
+
+✅ Do this:
+const userName = 'alice';
+function getUserById(id) { ... }
+
+❌ Not this:
+const user_name = 'alice';
+function GetUserById(id) { ... }
+```
+
+### Example: File-Specific Rule
+
+```markdown
+---
+globs: *.py
+---
+
+# Python Standards
+
+> These rules apply when working with Python files.
+
+## Naming
+- Use snake_case for functions and variables
+- Use PascalCase for classes
+- Use SCREAMING_SNAKE_CASE for constants
+```
+
+### Example: Folder-Specific Rule
+
+```markdown
+---
+globs: src/api/**
+---
+
+# API Route Conventions
+
+> These rules apply to all files in the API folder.
+
+## Structure
+- Each route file exports a single router
+- Use RESTful naming conventions
+- All responses use { data, error, meta } shape
+```
+
+### Agents + Rules = Complete Coverage
+
+| Layer | Purpose | Created by |
+|-------|---------|------------|
+| **Rules** | Universal *how* — conventions everyone follows | `/define` |
+| **Agents** | Specialized *who* — domain experts with focused scope | `/hire` |
+
+Think of it like a company: **rules are the employee handbook**, and **agents are the specialized team members** who follow it while excelling in their domains.
+
+---
+
 ## Practical Examples
 
 ### Example 1: Building a SaaS Backend
+
+**Set the ground rules:**
+
+```
+/define prefer arrow functions, single quotes, absolute imports with @/ prefix.
+All API responses use { data, error, meta } shape.
+```
 
 **Hire your team:**
 
@@ -345,7 +498,7 @@ By giving AI assistants the same structure, you get:
 ## Roadmap
 
 - [ ] **Multi-IDE support** — Adapt to other IDEs and frameworks (VS Code, Windsurf, etc.)
-- [ ] **Constitution file** — Add a top-level governance document (`_constitution.md`) with project-wide rules all agents must follow (TBD)
+- [x] **Project rules** — `/define` command creates project-wide rules in `.cursor/rules/` that all agents follow
 - [ ] **Agent dependencies** — Define relationships between agents (e.g., `/dinesh` consults `/gilfoyle` on deployment)
 - [ ] **Handoff protocol** — Standardize how agents pass context when deferring to each other
 - [ ] **Team templates** — Pre-built agent teams for common stacks (SaaS, mobile, data pipeline)

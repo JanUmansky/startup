@@ -14,7 +14,7 @@ Example: "/update bob add OWASP checklist and enforce zod validation on all new 
 
 ## Reserved Names (Protected)
 The following names are **system commands** and cannot be updated via /update:
-- hire, fire, update, list, _roster
+- hire, fire, update, list, define, _roster
 
 If the user attempts to update a reserved name, **reject the request** with a clear error:
 > ❌ Cannot update `<name>` — this is a protected system command.
@@ -23,7 +23,7 @@ If the user attempts to update a reserved name, **reject the request** with a cl
 ## Steps
 1) Parse assistant name + requested changes.
 2) **Validate the name is not reserved:**
-   - Check against reserved names: hire, fire, update, list, _roster
+   - Check against reserved names: hire, fire, update, list, define, _roster
    - If reserved, reject immediately with the error message above
    - Do NOT proceed with modification
 3) Open the command file and read current Mission/Scope/Rules.
@@ -33,8 +33,56 @@ If the user attempts to update a reserved name, **reject the request** with a cl
    - Extend checklists and operating rules
    - Update interfaces if target area changed
 5) If the one-line mission changed materially, update the entry in ROSTER_FILE too.
-6) Summarize the diff: what changed and why.
+6) Summarize the diff with structured output.
+
+## Output Format
+
+Structure the response with emojis and tables:
+
+---
+
+### 📝 Summary
+
+> One sentence: what was updated.
+
+Example: *Updated **dinesh** with OWASP security checklist.*
+
+---
+
+### 📁 Files Modified
+
+| File | Location |
+|------|----------|
+| `dinesh.md` | `.cursor/commands/` |
+| `_roster.md` | `.cursor/commands/` (if mission changed) |
+
+---
+
+### 🔄 Changes
+
+| Section | Before | After |
+|---------|--------|-------|
+| Operating Rules | 4 items | 8 items (+OWASP checklist) |
+| In Scope | validation, auth | validation, auth, security audits |
+
+---
+
+### ➕ Added
+
+- ✅ OWASP Top 10 security checklist
+- ✅ Zod validation enforcement
+- ✅ SQL injection prevention rules
+
+---
+
+### ✅ Ready to Use
+
+```
+/dinesh <your task here>
+```
+
+---
 
 ## Guardrails
-- Keep the assistant focused—don’t turn it into a generalist.
+- Keep the assistant focused—don't turn it into a generalist.
 - Prefer concrete checklists and rules over vague statements.

@@ -18,7 +18,7 @@ Example: "/hire bob a backend developer focused on API routes scalability, stand
 
 ## Reserved Names
 The following names are **system commands** and cannot be used for hired assistants:
-- hire, fire, update, list, _roster
+- hire, fire, update, list, define, _roster
 
 If the user attempts to hire an assistant with a reserved name, **reject the request** with a clear error:
 > ❌ Cannot hire an assistant named `<name>` — this is a reserved system command.
@@ -32,7 +32,7 @@ If the user attempts to hire an assistant with a reserved name, **reject the req
    - Constraints / tech hints
 
 2) **Validate the name is not reserved:**
-   - Check against reserved names: hire, fire, update, list, _roster
+   - Check against reserved names: hire, fire, update, list, define, _roster
    - If reserved, reject immediately with the error message above
    - Do NOT proceed with file creation
 
@@ -59,10 +59,53 @@ If the user attempts to hire an assistant with a reserved name, **reject the req
    - focus bullets
    - touched areas (folders/modules/patterns)
 
-8) Output a short summary:
-   - created file name
-   - key scope
-   - any detected conventions worth noting
+8) Output a well-structured summary with emojis, tables, and lists:
+
+---
+
+### 🎉 Summary
+
+> One sentence: who was hired and what they do.
+
+Example: *Hired **dinesh** as your Backend API Guardian.*
+
+---
+
+### 📁 Files
+
+| Action | File | Location |
+|--------|------|----------|
+| ✨ Created | `dinesh.md` | `.cursor/commands/` |
+| 📝 Updated | `_roster.md` | `.cursor/commands/` |
+
+---
+
+### 🎯 Scope
+
+| Area | Details |
+|------|---------|
+| 🟢 In scope | API routes, validation, auth middleware |
+| 🔴 Out of scope | Frontend, database schemas, DevOps |
+| 📂 Interfaces | `src/api/**`, `src/middleware/**` |
+
+---
+
+### 🔍 Detected Conventions
+
+- 📦 Framework: Express.js
+- ✅ Validation: Zod schemas
+- 🔐 Auth: JWT with refresh tokens
+- ⚠️ Error format: `{ error, code }`
+
+---
+
+### ✅ Ready to Use
+
+```
+/dinesh <your task here>
+```
+
+---
 
 ## Assistant Command Template (write into COMMANDS_DIR/<name>.md)
 
@@ -97,13 +140,51 @@ If the user attempts to hire an assistant with a reserved name, **reject the req
 6. Provide verification steps
 
 ## Output Format
-Always include:
-- What I changed
-- Why
-- Files
-- How to verify
-If risk exists:
-- Rollout / risk notes
+
+Structure every response with emojis, tables, and lists:
+
+---
+
+### 📋 Summary
+
+> One sentence describing what was done.
+
+---
+
+### 📁 Changes
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/api/users.ts` | ✏️ Modified | Added rate limiting |
+| `src/middleware/rateLimit.ts` | ✨ Created | New rate limiter |
+
+---
+
+### 🔍 What & Why
+
+| Change | Rationale |
+|--------|-----------|
+| Added rate limiting | Prevent API abuse |
+| Used sliding window | More fair than fixed window |
+
+---
+
+### ✅ Verify
+
+```bash
+# How to test the changes
+npm test
+curl -X GET http://localhost:3000/api/users
+```
+
+---
+
+### ⚠️ Risk Notes (if applicable)
+
+- 🟡 Rollout consideration
+- 🔴 Breaking change warning
+
+---
 
 ## Important behaviors
 - Stay narrowly focused on the hired scope.

@@ -16,8 +16,8 @@ Display the active assistants and what they do.
 
 ## Steps
 1) Identify system commands:
-   - Treat these as system commands: hire, fire, update, list
-   - Do not include them in “Active Assistants”.
+   - Treat these as system commands: hire, fire, update, list, define
+   - Do not include them in "Active Assistants".
 
 2) Try roster-first:
    - If ROSTER_FILE exists and contains an “Active Assistants” section, parse it and list assistants in that section.
@@ -40,19 +40,57 @@ Display the active assistants and what they do.
    - First: System commands available (always show).
    - Then: Active assistants.
 
-## Formatting example
+## Output Format
 
-System commands:
-- /hire — ...
-- /fire — ...
-- /update — ...
-- /list — ...
+Structure the response with emojis and tables:
 
-Active assistants:
-- /bob — Backend API Guardian
-  Mission: Keep our API routes consistent, scalable, and secure.
-  Focus: validation, authZ, route structure
-  File: bob.md
+---
 
-If any assistant file is missing:
-- /xyz — (missing file) (listed in roster but file not found)
+### 🛠️ System Commands
+
+| Command | Description |
+|---------|-------------|
+| `/hire` | Create a new specialist agent |
+| `/fire` | Remove an agent |
+| `/update` | Modify an agent's scope |
+| `/list` | Show this overview |
+| `/define` | Create project-wide rules |
+
+---
+
+### 👥 Your Team
+
+| Agent | Mission | Focus |
+|-------|---------|-------|
+| 🧑‍💻 `/dinesh` | Backend API Guardian | validation, auth, routes |
+| 🔧 `/gilfoyle` | DevOps Specialist | infra, CI/CD, monitoring |
+
+---
+
+### 📁 Files
+
+| Agent | File |
+|-------|------|
+| dinesh | `.cursor/commands/dinesh.md` |
+| gilfoyle | `.cursor/commands/gilfoyle.md` |
+
+---
+
+### ⚠️ Issues (if any)
+
+| Agent | Status |
+|-------|--------|
+| ❌ `/xyz` | Missing file — listed in roster but not found |
+
+---
+
+### 📜 Project Rules
+
+| File | Scope |
+|------|-------|
+| `conventions.mdc` | `alwaysApply: true` |
+| `python.mdc` | `globs: *.py` |
+
+**Location:** `.cursor/rules/`
+
+---
