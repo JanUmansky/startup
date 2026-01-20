@@ -12,11 +12,11 @@ Display the active assistants and what they do.
   - Command name (e.g., /bob)
   - One-line mission (from the assistant file, if possible)
   - Focus/scope highlights (bullets, short)
-- Separate “system commands” (hire/fire/update/list/rehire) from “hired assistants”.
+- Separate "system commands" (hire/fire/update/list) from "hired assistants".
 
 ## Steps
 1) Identify system commands:
-   - Treat these as system commands: hire, fire, update, list, rehire
+   - Treat these as system commands: hire, fire, update, list
    - Do not include them in “Active Assistants”.
 
 2) Try roster-first:

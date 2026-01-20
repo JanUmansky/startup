@@ -16,14 +16,27 @@ The user message invoking /hire contains:
 - role + scope description (required)
 Example: "/hire bob a backend developer focused on API routes scalability, standardization and security"
 
+## Reserved Names
+The following names are **system commands** and cannot be used for hired assistants:
+- hire, fire, update, list, _roster
+
+If the user attempts to hire an assistant with a reserved name, **reject the request** with a clear error:
+> ❌ Cannot hire an assistant named `<name>` — this is a reserved system command.
+> Please choose a different name.
+
 ## Steps
-1) Parse the user’s /hire message and extract:
+1) Parse the user's /hire message and extract:
    - Proposed name (if missing, invent a short, relevant name)
    - Role
    - Scope & focus areas
    - Constraints / tech hints
 
-2) Scan the codebase QUICKLY to infer conventions:
+2) **Validate the name is not reserved:**
+   - Check against reserved names: hire, fire, update, list, _roster
+   - If reserved, reject immediately with the error message above
+   - Do NOT proceed with file creation
+
+3) Scan the codebase QUICKLY to infer conventions:
    - Language(s), frameworks, folder structure
    - API patterns (routing/controllers/middleware)
    - Validation/auth patterns
@@ -32,21 +45,21 @@ Example: "/hire bob a backend developer focused on API routes scalability, stand
    - Lint/format rules if visible
    DO NOT reference specific files unless explicitly instructed by the user
 
-3) Decide final assistant command name:
+4) Decide final assistant command name:
    - lowercase kebab-case
    - avoid collisions (if exists, append -2, -3...)
    - if user supplied a name, prefer it unless it conflicts badly
 
-4) Create COMMANDS_DIR + "/<name>.md" with the template below.
+5) Create COMMANDS_DIR + "/<name>.md" with the template below.
 
-5) Ensure ROSTER_FILE exists. If missing, create it with a simple header and “Active Assistants” section.
+6) Ensure ROSTER_FILE exists. If missing, create it with a simple header and "Active Assistants" section.
 
-6) Append a roster entry under “Active Assistants” for the new assistant:
+7) Append a roster entry under "Active Assistants" for the new assistant:
    - name + one-line mission
    - focus bullets
    - touched areas (folders/modules/patterns)
 
-7) Output a short summary:
+8) Output a short summary:
    - created file name
    - key scope
    - any detected conventions worth noting
