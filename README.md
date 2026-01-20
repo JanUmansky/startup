@@ -290,15 +290,6 @@ Rules are stored as `.mdc` files (markdown with YAML frontmatter) in `.cursor/ru
 └── api-routes.mdc     # API folder rules (globs: src/api/**)
 ```
 
-### Rule File Format
-
-Every `.mdc` file **must** start with a YAML frontmatter block containing at least ONE of:
-
-| Field | When to Use | Example |
-|-------|-------------|---------|
-| `globs` | Rules for specific files/folders | `*.py`, `src/api/**`, `*.test.ts` |
-| `alwaysApply: true` | Global rules for entire codebase | N/A |
-
 ### Example: Global Rule
 
 ```markdown
